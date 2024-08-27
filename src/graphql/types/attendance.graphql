@@ -29,4 +29,5 @@ input SearchAttendanceInp {
 input MarkAttendanceInput {
   codeQr: String!
   typeMark: String!
+  dependence: Int!
 }

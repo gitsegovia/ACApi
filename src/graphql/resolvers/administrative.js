@@ -123,11 +123,11 @@ export default {
       }
     },
     markAttendanceAdministrative: async (_, { input }, { models }) => {
-      const { codeQr, typeMark } = input;
+      const { codeQr, typeMark, dependence } = input;
       try {
         const findAdministrative = await models.Administrative.findOne({
           where: {
-            codeQr,
+            idnDni: codeQr,
             active: true,
           },
         });
