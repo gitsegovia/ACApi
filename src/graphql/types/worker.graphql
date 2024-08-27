@@ -1,0 +1,50 @@
+type Worker {
+  id: UUID!
+  firstName: String!
+  lastName: String!
+  typeDni: String!
+  idnDni: String!
+  phone: String!
+  address: String!
+  condition: String!
+  numberWorker: Int!
+  codeQr: String!
+  gender: String!
+  email: String!
+  active: Boolean!
+  Attendance: [Attendance]
+}
+
+type WorkerResults {
+  infoPage: InfoPage
+  results: [Worker!]
+}
+
+type Query {
+  getAllWorker(search: SearchWorkerInp!): WorkerResults!
+  getAllIdWorker: [UUID!]
+  getDataWorkerById(id: UUID!): Worker!
+}
+
+type Mutation {
+  createWorker(input: CreateWorkerInp!): Boolean!
+  markAttendanceWorker(input: MarkAttendanceInput!): Attendance!
+  deleteWorkerById(id: UUID!): Boolean!
+  disableWorkerById(id: UUID!): Boolean!
+}
+
+input SearchWorkerInp {
+  options: OptionsSearch
+}
+
+input CreateWorkerInp {
+  id: UUID
+  firstName: String!
+  lastName: String!
+  idnDni: String!
+  phone: String!
+  address: String!
+  condition: String!
+  gender: String!
+  email: String!
+}

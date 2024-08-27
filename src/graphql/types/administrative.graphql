@@ -1,0 +1,50 @@
+type Administrative {
+  id: UUID!
+  firstName: String!
+  lastName: String!
+  typeDni: String!
+  idnDni: String!
+  phone: String!
+  address: String!
+  position: String!
+  numberAdministrative: Int!
+  codeQr: String!
+  gender: String!
+  email: String!
+  active: Boolean!
+  Attendance: [Attendance]
+}
+
+type AdministrativeResults {
+  infoPage: InfoPage
+  results: [Administrative!]
+}
+
+type Query {
+  getAllAdministrative(search: SearchAdministrativeInp!): AdministrativeResults!
+  getAllIdAdministrative: [UUID!]
+  getDataAdministrativeById(id: UUID!): Administrative!
+}
+
+type Mutation {
+  createAdministrative(input: CreateAdministrativeInp!): Boolean!
+  markAttendanceAdministrative(input: MarkAttendanceInput!): Attendance!
+  deleteAdministrativeById(id: UUID!): Boolean!
+  disableAdministrativeById(id: UUID!): Boolean!
+}
+
+input SearchAdministrativeInp {
+  options: OptionsSearch
+}
+
+input CreateAdministrativeInp {
+  id: UUID
+  firstName: String!
+  lastName: String!
+  idnDni: String!
+  phone: String!
+  address: String!
+  position: String!
+  gender: String!
+  email: String!
+}
