@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 
 export const sleep = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -106,9 +106,9 @@ export function sortList(list, field, order = "ASC") {
 }
 
 export const isDateOlderThan24Hours = (dateIso) => {
-  const date = moment(dateIso);
+  const date = moment(dateIso).tz("America/Caracas");
 
-  const date24HoursAgo = moment().subtract(24, "hours");
+  const date24HoursAgo = moment().tz("America/Caracas").subtract(24, "hours");
 
   return date.isBefore(date24HoursAgo);
 };

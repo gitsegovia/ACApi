@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 
 export default {
   Query: {
@@ -130,15 +130,15 @@ export default {
           throw new Error("1");
         }
 
-        const timeMark = moment().format("HH:mm");
-        const dayMark = moment().format("YYYY-MM-DD");
+        const timeMark = moment().tz("America/Caracas").format("HH:mm");
+        const dayMark = moment().tz("America/Caracas").format("YYYY-MM-DD");
         let idAtt = undefined;
 
         if (typeMark === "OUT") {
           const findAtt = await models.Attendance.findOne({
             where: {
               teacherId: findTeacher.id,
-              day: moment().format("YYYY-MM-DD"),
+              day: moment().tz("America/Caracas").format("YYYY-MM-DD"),
             },
           });
 
