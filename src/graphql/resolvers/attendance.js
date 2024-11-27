@@ -3,6 +3,69 @@ import { Op } from "sequelize";
 
 export default {
   Query: {
+    getMyAttendance:  async (_, { search }, { models }) => {
+      const options = search?.options ?? null;
+      const dateStart = search?.dateStart ?? null;
+      const dateEnd = search?.dateEnd ?? null;
+      const administrativeId = search?.userId;
+
+      const dayStart =
+        dateStart !== null
+          ? moment(dateStart).startOf("day").format("YYYY-MM-DD HH:mm:ss")
+          : moment().startOf("day").format("YYYY-MM-DD HH:mm:ss");
+      const dayEnd =
+        dateEnd !== null
+          ? moment(dateEnd).endOf("day").format("YYYY-MM-DD HH:mm:ss")
+          : moment().endOf("day").format("YYYY-MM-DD HH:mm:ss");
+
+      const optionsFind = {
+        where: { 
+          administrativeId,
+          updatedAt: {
+            [Op.gte]: dayStart,
+            [Op.lte]: dayEnd,
+          },
+        },
+        include: [
+          { model: models.Teacher, as: "Teacher" },
+          { model: models.Worker, as: "Worker" },
+          { model: models.Administrative, as: "Administrative" },
+        ],
+      };
+
+      if (options !== null) {
+        if (options.limit > 0) {
+          optionsFind.limit = options.limit;
+        }
+        if (options.offset > 0) {
+          optionsFind.offset = options.offset;
+        }
+        if (options.orderBy) {
+          optionsFind.order = options.orderBy.map((field, index) => {
+            return [
+              field,
+              options.direction ? options.direction[index] ?? "ASC" : "ASC",
+            ];
+          });
+          optionsFind.include.order = optionsFind.order;
+        }
+      }
+
+      const listAttendance = await models.Attendance.findAll(optionsFind);
+
+      const infoPage = {
+        count: listAttendance.length,
+        pages: 1,
+        current: 1,
+        next: false,
+        prev: false,
+      };
+
+      return {
+        infoPage,
+        results: listAttendance,
+      };
+    },                
     getAllAttendance: async (_, { search }, { models }) => {
       const options = search?.options ?? null;
       const dateStart = search?.dateStart ?? null;
@@ -19,7 +82,7 @@ export default {
           : moment().endOf("day").format("YYYY-MM-DD HH:mm:ss");
 
       const optionsFind = {
-        where: {
+        where: { 
           updatedAt: {
             [Op.gte]: dayStart,
             [Op.lte]: dayEnd,

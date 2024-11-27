@@ -15,6 +15,7 @@ type AttendanceResults {
 }
 
 type Query {
+  getMyAttendance(search: SearchAttendanceInp!): AttendanceResults!
   getAllAttendance(search: SearchAttendanceInp!): AttendanceResults!
   getAttendanceToDay: [Attendance!]
   getAttendanceToWeek: [Attendance!]
@@ -24,6 +25,7 @@ input SearchAttendanceInp {
   options: OptionsSearch
   dateStart: Date
   dateEnd: Date
+  AdministrativeId: UUID
 }
 
 input MarkAttendanceInput {
