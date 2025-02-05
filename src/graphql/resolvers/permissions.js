@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import { useAuth } from '../utils/auth';
 import { hasRole } from '../utils/roles';
 import ProtectedRoute from '../../components/ProtectedRoute';
-import { ROLES } from '../../utils/roles';
 
 const ProtectedRoute = ({ children, roles }) => {
   const router = useRouter();
