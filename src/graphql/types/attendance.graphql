@@ -1,0 +1,35 @@
+type Attendance {
+  id: UUID!
+  in: Time
+  out: Time
+  hourWork: Float
+  day: Date
+  Teacher: Teacher
+  Worker: Worker
+  Administrative: Administrative
+}
+
+type AttendanceResults {
+  infoPage: InfoPage
+  results: [Attendance!]
+}
+
+type Query {
+  getMyAttendance(search: SearchAttendanceInp!): AttendanceResults!
+  getAllAttendance(search: SearchAttendanceInp!): AttendanceResults!
+  getAttendanceToDay: [Attendance!]
+  getAttendanceToWeek: [Attendance!]
+}
+
+input SearchAttendanceInp {
+  options: OptionsSearch
+  dateStart: Date
+  dateEnd: Date
+  AdministrativeId: UUID
+}
+
+input MarkAttendanceInput {
+  codeQr: String!
+  typeMark: String!
+  dependence: Int!
+}

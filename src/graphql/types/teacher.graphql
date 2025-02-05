@@ -1,0 +1,58 @@
+type Teacher {
+  id: UUID!
+  firstName: String!
+  lastName: String!
+  typeDni: String!
+  idnDni: String!
+  phone: String!
+  address: String!
+  position: String
+  department: String
+  numberTeacher: Int!
+  codeQr: String!
+  gender: String!
+  email: String!
+  condition: String!
+  scale: String!
+  dedication: String!
+  active: Boolean!
+  Attendance: [Attendance]
+}
+
+type TeacherResults {
+  infoPage: InfoPage
+  results: [Teacher!]
+}
+
+type Query {
+  getAllTeacher(search: SearchTeacherInp!): TeacherResults!
+  getAllIdTeacher: [UUID!]
+  getDataTeacherById(id: UUID!): Teacher!
+}
+
+type Mutation {
+  createTeacher(input: CreateTeacherInp!): Boolean!
+  markAttendanceTeacher(input: MarkAttendanceInput!): Attendance!
+  deleteTeacherById(id: UUID!): Boolean!
+  disableTeacherById(id: UUID!): Boolean!
+}
+
+input SearchTeacherInp {
+  options: OptionsSearch
+}
+
+input CreateTeacherInp {
+  id: UUID
+  firstName: String!
+  lastName: String!
+  idnDni: String!
+  phone: String!
+  address: String!
+  position: String!
+  department: String!
+  gender: String!
+  email: String!
+  condition: String!
+  scale: String!
+  dedication: String!
+}
