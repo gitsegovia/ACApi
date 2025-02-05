@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useAuth } from '../utils/auth';
+import { hasRole } from '../utils/roles';
 
 export const useAuth = () => {
   const [user, setUser] = useState(null);
@@ -43,9 +46,7 @@ export const ROLES = {
   };
 
 
-  import { useRouter } from 'next/router';
-import { useAuth } from '../utils/auth';
-import { hasRole } from '../utils/roles';
+
 
 const ProtectedRoute = ({ children, roles }) => {
   const router = useRouter();
