@@ -24,7 +24,7 @@ import { resolvers } from "./graphql/resolversDef";
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 const middleware = async (req, res, next) => {
-  if(req.method === "OPTIONS"){
+  if (req.method === "OPTIONS") {
     res.set("Access-Control-Max-Age", "3600");
     res.status(204).send();
     return;
@@ -34,6 +34,7 @@ const middleware = async (req, res, next) => {
 
 // Start server express
 const app = express();
+app.use(cors("*"));
 
 // Handles hhtpserver
 const httpServer = http.createServer(app);
